@@ -1,3 +1,9 @@
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +21,10 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        setTanggal();
+        setTanggal1();
+        setJam();
+        setJam1();
     }
 
     /**
@@ -35,6 +45,8 @@ public class Main extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         txtadmin = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        txtwaktu = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -67,7 +79,6 @@ public class Main extends javax.swing.JFrame {
         jLabel32 = new javax.swing.JLabel();
         area = new javax.swing.JTextField();
         lahan = new javax.swing.JTextField();
-        jLabel37 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         timsitac = new javax.swing.JTextField();
         jLabel39 = new javax.swing.JLabel();
@@ -76,16 +87,17 @@ public class Main extends javax.swing.JFrame {
         jLabel33 = new javax.swing.JLabel();
         mitra = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
-        blocking = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         tinggitower = new javax.swing.JTextField();
         statuspln = new javax.swing.JTextField();
-        targetrfi = new com.toedter.calendar.JDateChooser();
         sow_implements = new javax.swing.JComboBox<>();
         progress = new javax.swing.JComboBox<>();
         sow_order = new javax.swing.JComboBox<>();
         milestone = new javax.swing.JComboBox<>();
+        targetrfi = new javax.swing.JTextField();
+        btnClear = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -94,10 +106,17 @@ public class Main extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         txtadmin1 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        txtwaktu1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabel = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         jPanel1.setLayout(null);
@@ -115,24 +134,33 @@ public class Main extends javax.swing.JFrame {
 
         txttanggal.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jPanel2.add(txttanggal);
-        txttanggal.setBounds(730, 50, 190, 30);
+        txttanggal.setBounds(730, 40, 190, 30);
 
         jLabel14.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel14.setText("Date  :");
         jPanel2.add(jLabel14);
-        jLabel14.setBounds(690, 50, 40, 30);
+        jLabel14.setBounds(690, 40, 40, 30);
 
         jLabel15.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel15.setText("User  :");
         jPanel2.add(jLabel15);
-        jLabel15.setBounds(690, 20, 40, 30);
+        jLabel15.setBounds(690, 10, 40, 30);
 
         txtadmin.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jPanel2.add(txtadmin);
-        txtadmin.setBounds(730, 20, 190, 30);
+        txtadmin.setBounds(730, 10, 190, 30);
+
+        jLabel20.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel20.setText("Time  :");
+        jPanel2.add(jLabel20);
+        jLabel20.setBounds(690, 70, 40, 30);
+
+        txtwaktu.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jPanel2.add(txtwaktu);
+        txtwaktu.setBounds(730, 70, 190, 30);
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(0, 0, 970, 100);
+        jPanel2.setBounds(0, 0, 980, 110);
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setLayout(null);
@@ -278,11 +306,6 @@ public class Main extends javax.swing.JFrame {
         jPanel4.add(lahan);
         lahan.setBounds(150, 180, 320, 30);
 
-        jLabel37.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        jLabel37.setText("Blocking");
-        jPanel4.add(jLabel37);
-        jLabel37.setBounds(20, 420, 100, 30);
-
         jLabel29.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         jLabel29.setText("Tim SITAC");
         jPanel4.add(jLabel29);
@@ -295,7 +318,7 @@ public class Main extends javax.swing.JFrame {
         jLabel39.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         jLabel39.setText("Target RFI");
         jPanel4.add(jLabel39);
-        jLabel39.setBounds(20, 500, 110, 30);
+        jLabel39.setBounds(20, 460, 110, 30);
 
         jLabel34.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         jLabel34.setText("Tinggi Tower");
@@ -321,10 +344,6 @@ public class Main extends javax.swing.JFrame {
         jPanel4.add(jLabel31);
         jLabel31.setBounds(20, 180, 90, 30);
 
-        blocking.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jPanel4.add(blocking);
-        blocking.setBounds(150, 420, 320, 30);
-
         jLabel35.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         jLabel35.setText("Milestone");
         jPanel4.add(jLabel35);
@@ -333,7 +352,7 @@ public class Main extends javax.swing.JFrame {
         jLabel38.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         jLabel38.setText("Status PLN");
         jPanel4.add(jLabel38);
-        jLabel38.setBounds(20, 460, 110, 30);
+        jLabel38.setBounds(20, 420, 110, 30);
 
         tinggitower.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel4.add(tinggitower);
@@ -341,9 +360,7 @@ public class Main extends javax.swing.JFrame {
 
         statuspln.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel4.add(statuspln);
-        statuspln.setBounds(150, 460, 320, 30);
-        jPanel4.add(targetrfi);
-        targetrfi.setBounds(150, 500, 320, 30);
+        statuspln.setBounds(150, 420, 320, 30);
 
         sow_implements.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "B2S", "Collo", "Combat", "MCP", "Mini Macro", "TDF" }));
         jPanel4.add(sow_implements);
@@ -360,11 +377,31 @@ public class Main extends javax.swing.JFrame {
         milestone.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "01. DROP", "02. CHANG SOW", "03. SIS", "04. SITAC 1", "05. SITAC 2", "06. RFC", "07. CME", "08. RFI", "09. RFI by COMBAT", "10. Wait IP" }));
         jPanel4.add(milestone);
         milestone.setBounds(150, 340, 320, 30);
+        jPanel4.add(targetrfi);
+        targetrfi.setBounds(150, 460, 320, 30);
+
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnClear);
+        btnClear.setBounds(380, 500, 90, 40);
+
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnSave);
+        btnSave.setBounds(280, 500, 90, 40);
 
         jPanel1.add(jPanel4);
         jPanel4.setBounds(470, 120, 490, 550);
 
-        jTabbedPane1.addTab("tab1", jPanel1);
+        jTabbedPane1.addTab("Insert Data", jPanel1);
 
         jPanel5.setLayout(null);
 
@@ -381,49 +418,174 @@ public class Main extends javax.swing.JFrame {
 
         txttanggal1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jPanel6.add(txttanggal1);
-        txttanggal1.setBounds(730, 50, 190, 30);
+        txttanggal1.setBounds(730, 40, 190, 30);
 
         jLabel18.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel18.setText("Date  :");
         jPanel6.add(jLabel18);
-        jLabel18.setBounds(690, 50, 40, 30);
+        jLabel18.setBounds(690, 40, 40, 30);
 
         jLabel19.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel19.setText("User  :");
         jPanel6.add(jLabel19);
-        jLabel19.setBounds(690, 20, 40, 30);
+        jLabel19.setBounds(690, 10, 40, 30);
 
         txtadmin1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jPanel6.add(txtadmin1);
-        txtadmin1.setBounds(730, 20, 190, 30);
+        txtadmin1.setBounds(730, 10, 190, 30);
+
+        jLabel21.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel21.setText("Time  :");
+        jPanel6.add(jLabel21);
+        jLabel21.setBounds(690, 70, 40, 30);
+
+        txtwaktu1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jPanel6.add(txtwaktu1);
+        txtwaktu1.setBounds(730, 70, 190, 30);
 
         jPanel5.add(jPanel6);
-        jPanel6.setBounds(0, 0, 970, 100);
+        jPanel6.setBounds(0, 0, 970, 110);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null"
             }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tabel);
 
         jPanel5.add(jScrollPane2);
-        jScrollPane2.setBounds(0, 120, 980, 200);
+        jScrollPane2.setBounds(10, 120, 950, 200);
 
-        jTabbedPane1.addTab("tab2", jPanel5);
+        jTabbedPane1.addTab("Tabel", jPanel5);
 
         getContentPane().add(jTabbedPane1);
-        jTabbedPane1.setBounds(0, 0, 980, 760);
+        jTabbedPane1.setBounds(0, 0, 980, 710);
 
-        setBounds(0, 0, 996, 801);
+        setBounds(0, 0, 990, 744);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        String user1 = Login.user;
+        txtadmin.setText(user1);
+        String user2 = Login.user;
+        txtadmin1.setText(user2);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+            String SQL = "INSERT INTO tb_sitelist (projectid,siteid_po,sitename_po,siteid_actual,sitename_actual,cand,lat,longg,alamat,plantower,batch,area,mitra,timsitac,nohp,lahan,sow_order,sow_implements,tinggitower,milestone,progress,statuspln,targetrfi)"
+            + "VALUES('"+projectid.getText()+"','"+siteid_po.getText()+"','"+sitename_po.getText()+"','"+siteid_actual.getText()+"','"+sitename_actual.getText()+"','"+cand.getText()+"','"+lat.getText()+"','"+longg.getText()+"','"+alamat.getText()+"','"+plantower.getText()+"','"+batch.getText()+"','"+area.getText()+"','"+mitra.getText()+"','"+timsitac.getText()+"','"+nohp.getText()+"','"+lahan.getText()+"','"+sow_order.getSelectedItem()+"','"+sow_implements.getSelectedItem()+"','"+tinggitower.getText()+"','"+milestone.getSelectedItem()+"','"+progress.getSelectedItem()+"','"+statuspln.getText()+"','"+targetrfi.getText()+"')";
+            int status = KoneksiDB.execute(SQL);
+            
+            if (status == 1){
+                JOptionPane.showMessageDialog(this, "Data berhasil dimasukkan", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(this, "Data gagal dimasukkan", "Coba Lagi", JOptionPane.WARNING_MESSAGE);
+            }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        projectid.setText("");
+        siteid_po.setText("");
+        sitename_po.setText("");
+        siteid_actual.setText("");
+        sitename_actual.setText("");
+        cand.setText("");
+        lat.setText("");
+        longg.setText("");
+        alamat.setText("");
+        plantower.setText("");
+        batch.setText("");
+        area.setText("");
+        mitra.setText("");
+        timsitac.setText("");
+        nohp.setText("");
+        lahan.setText("");
+        sow_order.setSelectedItem("-");
+        sow_implements.setSelectedItem("-");
+        tinggitower.setText("");
+        milestone.setSelectedItem("-");
+        progress.setSelectedItem("-");
+        statuspln.setText("");
+        targetrfi.setText("");
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void setTanggal(){
+        java.util.Date now = new java.util.Date();
+        java.text.SimpleDateFormat kal = new java.text.SimpleDateFormat("dd MMMM yyyy");
+        txttanggal.setText(kal.format(now));
+    }
+    
+    private void setTanggal1(){
+        java.util.Date now = new java.util.Date();
+        java.text.SimpleDateFormat kal = new java.text.SimpleDateFormat("dd MMMM yyyy");
+        txttanggal1.setText(kal.format(now));
+    }
+    
+    public final void setJam(){
+        ActionListener taskPerformer = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                String nol_jam = "", nol_menit = "",nol_detik = "";
+                java.util.Date dateTime = new java.util.Date();
+                int nilai_jam = dateTime.getHours();
+                int nilai_menit = dateTime.getMinutes();
+                int nilai_detik = dateTime.getSeconds();
+                if(nilai_jam <= 9) nol_jam= "0";
+                if(nilai_menit <= 9) nol_menit= "0";
+                if(nilai_detik <= 9) nol_detik= "0";
+                String jam = nol_jam + Integer.toString(nilai_jam);
+                String menit = nol_menit + Integer.toString(nilai_menit);
+                String detik = nol_detik + Integer.toString(nilai_detik);
+                txtwaktu.setText(jam+":"+menit+":"+detik+"");
+            }
+        };
+        new Timer(1000, taskPerformer).start();
+    }
+    
+    public final void setJam1(){
+        ActionListener taskPerformer = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                String nol_jam = "", nol_menit = "",nol_detik = "";
+                java.util.Date dateTime = new java.util.Date();
+                int nilai_jam = dateTime.getHours();
+                int nilai_menit = dateTime.getMinutes();
+                int nilai_detik = dateTime.getSeconds();
+                if(nilai_jam <= 9) nol_jam= "0";
+                if(nilai_menit <= 9) nol_menit= "0";
+                if(nilai_detik <= 9) nol_detik= "0";
+                String jam = nol_jam + Integer.toString(nilai_jam);
+                String menit = nol_menit + Integer.toString(nilai_menit);
+                String detik = nol_detik + Integer.toString(nilai_detik);
+                txtwaktu1.setText(jam+":"+menit+":"+detik+"");
+            }
+        };
+        new Timer(1000, taskPerformer).start();
+    }
     /**
      * @param args the command line arguments
      */
@@ -463,7 +625,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextArea alamat;
     private javax.swing.JTextField area;
     private javax.swing.JTextField batch;
-    private javax.swing.JTextField blocking;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnSave;
     private javax.swing.JTextField cand;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -477,6 +640,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
@@ -488,7 +653,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
@@ -506,7 +670,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField lahan;
     private javax.swing.JTextField lat;
     private javax.swing.JTextField longg;
@@ -523,12 +686,15 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> sow_implements;
     private javax.swing.JComboBox<String> sow_order;
     private javax.swing.JTextField statuspln;
-    private com.toedter.calendar.JDateChooser targetrfi;
+    private javax.swing.JTable tabel;
+    private javax.swing.JTextField targetrfi;
     private javax.swing.JTextField timsitac;
     private javax.swing.JTextField tinggitower;
     private javax.swing.JLabel txtadmin;
     private javax.swing.JLabel txtadmin1;
     private javax.swing.JLabel txttanggal;
     private javax.swing.JLabel txttanggal1;
+    private javax.swing.JLabel txtwaktu;
+    private javax.swing.JLabel txtwaktu1;
     // End of variables declaration//GEN-END:variables
 }
