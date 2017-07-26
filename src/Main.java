@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,6 +35,53 @@ public class Main extends javax.swing.JFrame {
         setTanggal1();
         setJam();
         setJam1();
+        tabel.setAutoResizeMode(tabel.AUTO_RESIZE_OFF);
+        TableColumn col = tabel.getColumnModel().getColumn(0);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(1);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(2);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(3);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(4);
+        col.setPreferredWidth(100); 
+        col=tabel.getColumnModel().getColumn(5);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(6);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(7);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(8);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(9);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(10);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(11);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(12);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(13);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(14);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(15);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(16);
+        col.setPreferredWidth(100); 
+        col=tabel.getColumnModel().getColumn(17);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(18);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(19);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(20);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(21);
+        col.setPreferredWidth(100);
+        col=tabel.getColumnModel().getColumn(22);
+        col.setPreferredWidth(100);
     }
 
     /**
@@ -118,7 +166,7 @@ public class Main extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         txtwaktu1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        Table = new javax.swing.JTable();
+        tabel = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
@@ -459,7 +507,7 @@ public class Main extends javax.swing.JFrame {
         jPanel5.add(jPanel6);
         jPanel6.setBounds(0, 0, 970, 110);
 
-        Table.setModel(new javax.swing.table.DefaultTableModel(
+        tabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
@@ -478,12 +526,12 @@ public class Main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        Table.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TableMouseClicked(evt);
+                tabelMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(Table);
+        jScrollPane3.setViewportView(tabel);
 
         jPanel5.add(jScrollPane3);
         jScrollPane3.setBounds(10, 180, 960, 490);
@@ -574,9 +622,9 @@ public class Main extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        int baris = Table.getSelectedRow();
+        int baris = tabel.getSelectedRow();
         if (baris != -1){
-            String ID = Table.getValueAt(baris, 0).toString();
+            String ID = tabel.getValueAt(baris, 0).toString();
             String SQL = "DELETE FROM tb_sitelist WHERE projectid='"+ID+"'";
             int status = KoneksiDB.execute(SQL);
             if (status==1){
@@ -594,10 +642,10 @@ public class Main extends javax.swing.JFrame {
         selectData();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
-    private void TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableMouseClicked
+    private void tabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelMouseClicked
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_TableMouseClicked
+    }//GEN-LAST:event_tabelMouseClicked
 
     private void setTanggal(){
         java.util.Date now = new java.util.Date();
@@ -689,7 +737,7 @@ public class Main extends javax.swing.JFrame {
         }catch (SQLException ex){
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Table.setModel(dtm);
+        tabel.setModel(dtm);
     }
     
     /**
@@ -728,7 +776,6 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable Table;
     private javax.swing.JTextArea alamat;
     private javax.swing.JTextField area;
     private javax.swing.JTextField batch;
@@ -797,6 +844,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> sow_implements;
     private javax.swing.JComboBox<String> sow_order;
     private javax.swing.JTextField statuspln;
+    private javax.swing.JTable tabel;
     private javax.swing.JTextField targetrfi;
     private javax.swing.JTextField timsitac;
     private javax.swing.JTextField tinggitower;
