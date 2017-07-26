@@ -1,8 +1,17 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -108,8 +117,12 @@ public class Main extends javax.swing.JFrame {
         txtadmin1 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         txtwaktu1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tabel = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        Table = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -446,7 +459,7 @@ public class Main extends javax.swing.JFrame {
         jPanel5.add(jPanel6);
         jPanel6.setBounds(0, 0, 970, 110);
 
-        tabel.setModel(new javax.swing.table.DefaultTableModel(
+        Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
@@ -454,28 +467,54 @@ public class Main extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null"
+                "Project ID", "Site ID PO", "Site Name PO", "Site ID Actual", "Site Name Actual", "Cand", "Lat", "Long", "Alamat", "Plan Tower", "Batch", "Area", "Mitra", "Tim SITAC", "No HP", "Lahan", "SoW Order", "SoW Implements", "Tinggi Tower", "Milestone", "Progress", "Status PLN", "Target RFI"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false
+                false, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tabel);
+        Table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(Table);
 
-        jPanel5.add(jScrollPane2);
-        jScrollPane2.setBounds(10, 120, 950, 200);
+        jPanel5.add(jScrollPane3);
+        jScrollPane3.setBounds(10, 180, 960, 490);
+
+        jPanel7.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel7.setLayout(null);
+
+        jButton1.setText("Print");
+        jPanel7.add(jButton1);
+        jButton1.setBounds(820, 10, 120, 30);
+
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+        jPanel7.add(btnRefresh);
+        btnRefresh.setBounds(10, 10, 120, 30);
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        jPanel7.add(btnDelete);
+        btnDelete.setBounds(140, 10, 120, 30);
+
+        jPanel5.add(jPanel7);
+        jPanel7.setBounds(10, 120, 950, 50);
 
         jTabbedPane1.addTab("Tabel", jPanel5);
 
@@ -533,6 +572,33 @@ public class Main extends javax.swing.JFrame {
         targetrfi.setText("");
     }//GEN-LAST:event_btnClearActionPerformed
 
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        int baris = Table.getSelectedRow();
+        if (baris != -1){
+            String ID = Table.getValueAt(baris, 0).toString();
+            String SQL = "DELETE FROM tb_sitelist WHERE projectid='"+ID+"'";
+            int status = KoneksiDB.execute(SQL);
+            if (status==1){
+                JOptionPane.showMessageDialog(this, "Data berhasil dihapus! \nKlik tombol Refresh untuk mengupdate Database", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(this, "Data gagal dihapus!", "Coba Lagi", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Pilih Baris Data Dahulu", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        selectData();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_TableMouseClicked
+
     private void setTanggal(){
         java.util.Date now = new java.util.Date();
         java.text.SimpleDateFormat kal = new java.text.SimpleDateFormat("dd MMMM yyyy");
@@ -586,6 +652,46 @@ public class Main extends javax.swing.JFrame {
         };
         new Timer(1000, taskPerformer).start();
     }
+    
+    private void selectData() {
+        String kolom[] = {"Project ID","Site ID PO","Site Name PO","Site ID Actual","Site Name Actual","Cand","Lat","Long","Alamat","Plan Tower","Batch","Area","Mitra","Tim Sitac","No HP","Lahan","SoW Order","SoW Implements","Tinggi Tower","Milestone","Progress","Status PLN","Target RFI"};
+        DefaultTableModel dtm = new DefaultTableModel(null, kolom); 
+        String SQL = "SELECT * FROM tb_sitelist";
+        ResultSet rs = KoneksiDB.executeQuery(SQL);
+        try {
+            while(rs.next()){
+              String projectid = rs.getString(1);
+              String siteid_po = rs.getString(2);
+              String sitename_po = rs.getString(3);
+              String siteid_actual = rs.getString(4);
+              String sitename_actual = rs.getString(5);
+              String cand = rs.getString(6);
+              String lat = rs.getString(7);
+              String longg = rs.getString(8);
+              String alamat = rs.getString(9);
+              String plantower = rs.getString(10);
+              String batch = rs.getString(11);
+              String area = rs.getString(12);
+              String mitra = rs.getString(13);
+              String timsitac = rs.getString(14);
+              String nohp = rs.getString(15);
+              String lahan = rs.getString(16);
+              String sow_order = rs.getString(17);
+              String sow_implements = rs.getString(18);
+              String tinggitower = rs.getString(19);
+              String milestone = rs.getString(20);
+              String progress = rs.getString(21);
+              String statuspln = rs.getString(22);
+              String targetrfi = rs.getString(23);
+              String data[] = {projectid,siteid_po,sitename_po,siteid_actual,sitename_actual,cand,lat,longg,alamat,plantower,batch,area,mitra,timsitac,nohp,lahan,sow_order,sow_implements,tinggitower,milestone,progress,statuspln,targetrfi};
+              dtm.addRow(data);
+            }
+        }catch (SQLException ex){
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Table.setModel(dtm);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -622,12 +728,16 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable Table;
     private javax.swing.JTextArea alamat;
     private javax.swing.JTextField area;
     private javax.swing.JTextField batch;
     private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSave;
     private javax.swing.JTextField cand;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -667,8 +777,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField lahan;
     private javax.swing.JTextField lat;
@@ -686,7 +797,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> sow_implements;
     private javax.swing.JComboBox<String> sow_order;
     private javax.swing.JTextField statuspln;
-    private javax.swing.JTable tabel;
     private javax.swing.JTextField targetrfi;
     private javax.swing.JTextField timsitac;
     private javax.swing.JTextField tinggitower;

@@ -135,7 +135,8 @@ public class Login extends javax.swing.JFrame {
                 txtpass.setText("");
                 txtnama.requestFocus();
             }
-        }   catch (SQLException ex) {
+        }   
+            catch (SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "GAGAL");
         }
     }//GEN-LAST:event_btnLoginActionPerformed

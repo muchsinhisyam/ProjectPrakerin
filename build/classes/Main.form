@@ -1008,45 +1008,42 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane3">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="120" width="950" height="200"/>
+                  <AbsoluteConstraints x="10" y="180" width="960" height="490"/>
                 </Constraint>
               </Constraints>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tabel">
+                <Component class="javax.swing.JTable" name="Table">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="23" rowCount="4">
-                        <Column editable="false" title="" type="java.lang.String"/>
-                        <Column editable="false" title="null" type="java.lang.String"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="true" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
-                        <Column editable="false" title="null" type="java.lang.Object"/>
+                        <Column editable="false" title="Project ID" type="java.lang.Object"/>
+                        <Column editable="true" title="Site ID PO" type="java.lang.Object"/>
+                        <Column editable="false" title="Site Name PO" type="java.lang.Object"/>
+                        <Column editable="true" title="Site ID Actual" type="java.lang.Object"/>
+                        <Column editable="true" title="Site Name Actual" type="java.lang.Object"/>
+                        <Column editable="true" title="Cand" type="java.lang.Object"/>
+                        <Column editable="true" title="Lat" type="java.lang.Object"/>
+                        <Column editable="true" title="Long" type="java.lang.Object"/>
+                        <Column editable="true" title="Alamat" type="java.lang.Object"/>
+                        <Column editable="true" title="Plan Tower" type="java.lang.Object"/>
+                        <Column editable="true" title="Batch" type="java.lang.Object"/>
+                        <Column editable="true" title="Area" type="java.lang.Object"/>
+                        <Column editable="true" title="Mitra" type="java.lang.Object"/>
+                        <Column editable="true" title="Tim SITAC" type="java.lang.Object"/>
+                        <Column editable="true" title="No HP" type="java.lang.Object"/>
+                        <Column editable="true" title="Lahan" type="java.lang.Object"/>
+                        <Column editable="true" title="SoW Order" type="java.lang.Object"/>
+                        <Column editable="true" title="SoW Implements" type="java.lang.Object"/>
+                        <Column editable="true" title="Tinggi Tower" type="java.lang.Object"/>
+                        <Column editable="true" title="Milestone" type="java.lang.Object"/>
+                        <Column editable="true" title="Progress" type="java.lang.Object"/>
+                        <Column editable="true" title="Status PLN" type="java.lang.Object"/>
+                        <Column editable="true" title="Target RFI" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -1172,6 +1169,63 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TableMouseClicked"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel7">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="cc" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="10" y="120" width="950" height="50"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+                <Property name="useNullLayout" type="boolean" value="true"/>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JButton" name="jButton1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Print"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="820" y="10" width="120" height="30"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnRefresh">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Refresh"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshActionPerformed"/>
+                  </Events>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="10" y="10" width="120" height="30"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnDelete">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Delete"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteActionPerformed"/>
+                  </Events>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="140" y="10" width="120" height="30"/>
+                    </Constraint>
+                  </Constraints>
                 </Component>
               </SubComponents>
             </Container>
