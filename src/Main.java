@@ -1,4 +1,6 @@
 
+import java.awt.Frame;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -13,6 +15,16 @@ import javax.swing.JScrollPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;          
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -33,55 +45,15 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         setTanggal();
         setTanggal1();
+        setTanggal2();
+        setTanggal4();
         setJam();
         setJam1();
-        tabel.setAutoResizeMode(tabel.AUTO_RESIZE_OFF);
-        TableColumn col = tabel.getColumnModel().getColumn(0);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(1);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(2);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(3);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(4);
-        col.setPreferredWidth(100); 
-        col=tabel.getColumnModel().getColumn(5);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(6);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(7);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(8);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(9);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(10);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(11);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(12);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(13);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(14);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(15);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(16);
-        col.setPreferredWidth(100); 
-        col=tabel.getColumnModel().getColumn(17);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(18);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(19);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(20);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(21);
-        col.setPreferredWidth(100);
-        col=tabel.getColumnModel().getColumn(22);
-        col.setPreferredWidth(100);
+        setJam2();
+        setJam4();
+        setTable();
+        disableMaximize();
+        setIcon();
     }
 
     /**
@@ -153,8 +125,9 @@ public class Main extends javax.swing.JFrame {
         sow_order = new javax.swing.JComboBox<>();
         milestone = new javax.swing.JComboBox<>();
         targetrfi = new javax.swing.JTextField();
-        btnClear = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
+        sitelistClear = new javax.swing.JButton();
+        sitelistSave = new javax.swing.JButton();
+        sitelistUpdate = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -166,11 +139,79 @@ public class Main extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         txtwaktu1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tabel = new javax.swing.JTable();
+        sitelistTabel = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        btnRefresh = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
+        sitelistExcel = new javax.swing.JButton();
+        sitelistRefresh = new javax.swing.JButton();
+        sitelistDelete = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        txttanggal2 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        txtadmin2 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        txtwaktu2 = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        jLabel56 = new javax.swing.JLabel();
+        jLabel57 = new javax.swing.JLabel();
+        jLabel58 = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
+        masasewa = new javax.swing.JTextField();
+        siteid_actual1 = new javax.swing.JTextField();
+        nilaisewapph = new javax.swing.JTextField();
+        kepemilikan = new javax.swing.JComboBox<>();
+        sitacClear = new javax.swing.JButton();
+        sitacSave = new javax.swing.JButton();
+        sitacUpdate = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        sitacTabel = new javax.swing.JTable();
+        jPanel9 = new javax.swing.JPanel();
+        jButton4 = new javax.swing.JButton();
+        sitacRefresh = new javax.swing.JButton();
+        sitacExcel = new javax.swing.JButton();
+        sitacDelete = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        jPanel14 = new javax.swing.JPanel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        txttanggal3 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        txtadmin3 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        txtwaktu3 = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel65 = new javax.swing.JLabel();
+        jLabel66 = new javax.swing.JLabel();
+        jLabel67 = new javax.swing.JLabel();
+        jLabel68 = new javax.swing.JLabel();
+        jLabel69 = new javax.swing.JLabel();
+        jLabel70 = new javax.swing.JLabel();
+        typetower = new javax.swing.JTextField();
+        koordinatsite = new javax.swing.JTextField();
+        power = new javax.swing.JComboBox<>();
+        cmeClear = new javax.swing.JButton();
+        sitetype = new javax.swing.JComboBox<>();
+        rfidate = new javax.swing.JTextField();
+        jLabel71 = new javax.swing.JLabel();
+        jLabel72 = new javax.swing.JLabel();
+        cmeSave = new javax.swing.JButton();
+        cmeUpdate = new javax.swing.JButton();
+        jLabel73 = new javax.swing.JLabel();
+        power_kva = new javax.swing.JComboBox<>();
+        jLabel74 = new javax.swing.JLabel();
+        tinggitowerr = new javax.swing.JTextField();
+        jPanel11 = new javax.swing.JPanel();
+        cmeExcel = new javax.swing.JButton();
+        cmeRefresh = new javax.swing.JButton();
+        cmeDelete = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -330,7 +371,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1.setBounds(150, 340, 290, 120);
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 120, 450, 550);
+        jPanel3.setBounds(10, 120, 450, 560);
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 255));
         jPanel4.setLayout(null);
@@ -441,28 +482,37 @@ public class Main extends javax.swing.JFrame {
         jPanel4.add(targetrfi);
         targetrfi.setBounds(150, 460, 320, 30);
 
-        btnClear.setText("Clear");
-        btnClear.addActionListener(new java.awt.event.ActionListener() {
+        sitelistClear.setText("Clear");
+        sitelistClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearActionPerformed(evt);
+                sitelistClearActionPerformed(evt);
             }
         });
-        jPanel4.add(btnClear);
-        btnClear.setBounds(380, 500, 90, 40);
+        jPanel4.add(sitelistClear);
+        sitelistClear.setBounds(370, 510, 100, 40);
 
-        btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
+        sitelistSave.setText("Save");
+        sitelistSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                sitelistSaveActionPerformed(evt);
             }
         });
-        jPanel4.add(btnSave);
-        btnSave.setBounds(280, 500, 90, 40);
+        jPanel4.add(sitelistSave);
+        sitelistSave.setBounds(150, 510, 100, 40);
+
+        sitelistUpdate.setText("Edit");
+        sitelistUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sitelistUpdateActionPerformed(evt);
+            }
+        });
+        jPanel4.add(sitelistUpdate);
+        sitelistUpdate.setBounds(260, 510, 100, 40);
 
         jPanel1.add(jPanel4);
-        jPanel4.setBounds(470, 120, 490, 550);
+        jPanel4.setBounds(470, 120, 490, 560);
 
-        jTabbedPane1.addTab("Insert Data", jPanel1);
+        jTabbedPane1.addTab("Site List", jPanel1);
 
         jPanel5.setLayout(null);
 
@@ -507,7 +557,7 @@ public class Main extends javax.swing.JFrame {
         jPanel5.add(jPanel6);
         jPanel6.setBounds(0, 0, 970, 110);
 
-        tabel.setModel(new javax.swing.table.DefaultTableModel(
+        sitelistTabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
@@ -526,50 +576,378 @@ public class Main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        sitelistTabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelMouseClicked(evt);
+                sitelistTabelMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(tabel);
+        jScrollPane3.setViewportView(sitelistTabel);
 
         jPanel5.add(jScrollPane3);
-        jScrollPane3.setBounds(10, 180, 960, 490);
+        jScrollPane3.setBounds(10, 180, 950, 490);
 
         jPanel7.setBackground(new java.awt.Color(204, 204, 255));
         jPanel7.setLayout(null);
 
-        jButton1.setText("Print");
-        jPanel7.add(jButton1);
-        jButton1.setBounds(820, 10, 120, 30);
-
-        btnRefresh.setText("Refresh");
-        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+        sitelistExcel.setText("Export Excel");
+        sitelistExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefreshActionPerformed(evt);
+                sitelistExcelActionPerformed(evt);
             }
         });
-        jPanel7.add(btnRefresh);
-        btnRefresh.setBounds(10, 10, 120, 30);
+        jPanel7.add(sitelistExcel);
+        sitelistExcel.setBounds(820, 10, 120, 30);
 
-        btnDelete.setText("Delete");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        sitelistRefresh.setText("Refresh");
+        sitelistRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
+                sitelistRefreshActionPerformed(evt);
             }
         });
-        jPanel7.add(btnDelete);
-        btnDelete.setBounds(140, 10, 120, 30);
+        jPanel7.add(sitelistRefresh);
+        sitelistRefresh.setBounds(10, 10, 120, 30);
+
+        sitelistDelete.setText("Delete");
+        sitelistDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sitelistDeleteActionPerformed(evt);
+            }
+        });
+        jPanel7.add(sitelistDelete);
+        sitelistDelete.setBounds(140, 10, 120, 30);
 
         jPanel5.add(jPanel7);
         jPanel7.setBounds(10, 120, 950, 50);
 
-        jTabbedPane1.addTab("Tabel", jPanel5);
+        jTabbedPane1.addTab("Tabel Site List", jPanel5);
+
+        jPanel8.setLayout(null);
+
+        jPanel12.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel12.setLayout(null);
+
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Logo 2.png"))); // NOI18N
+        jPanel12.add(jLabel22);
+        jLabel22.setBounds(10, 0, 100, 100);
+
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Mitratel 2.png"))); // NOI18N
+        jPanel12.add(jLabel23);
+        jLabel23.setBounds(120, 0, 240, 100);
+
+        txttanggal2.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jPanel12.add(txttanggal2);
+        txttanggal2.setBounds(730, 40, 190, 30);
+
+        jLabel24.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel24.setText("Date  :");
+        jPanel12.add(jLabel24);
+        jLabel24.setBounds(690, 40, 40, 30);
+
+        jLabel25.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel25.setText("User  :");
+        jPanel12.add(jLabel25);
+        jLabel25.setBounds(690, 10, 40, 30);
+
+        txtadmin2.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jPanel12.add(txtadmin2);
+        txtadmin2.setBounds(730, 10, 190, 30);
+
+        jLabel26.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel26.setText("Time  :");
+        jPanel12.add(jLabel26);
+        jLabel26.setBounds(690, 70, 40, 30);
+
+        txtwaktu2.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jPanel12.add(txtwaktu2);
+        txtwaktu2.setBounds(730, 70, 190, 30);
+
+        jPanel8.add(jPanel12);
+        jPanel12.setBounds(0, 0, 970, 110);
+
+        jPanel16.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel16.setLayout(null);
+
+        jLabel54.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel54.setText("PKS");
+        jPanel16.add(jLabel54);
+        jLabel54.setBounds(20, 20, 110, 30);
+
+        jLabel55.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel55.setText("IMB");
+        jPanel16.add(jLabel55);
+        jLabel55.setBounds(20, 60, 110, 30);
+
+        jLabel56.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel56.setText("Masa Sewa");
+        jPanel16.add(jLabel56);
+        jLabel56.setBounds(20, 100, 130, 30);
+
+        jLabel57.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel57.setText("Luas Lahan");
+        jPanel16.add(jLabel57);
+        jLabel57.setBounds(490, 20, 140, 30);
+
+        jLabel58.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel58.setText("Kepemilikan");
+        jPanel16.add(jLabel58);
+        jLabel58.setBounds(490, 60, 150, 30);
+
+        jLabel59.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel59.setText("Nilai Sewa PPH");
+        jPanel16.add(jLabel59);
+        jLabel59.setBounds(490, 100, 110, 30);
+
+        masasewa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel16.add(masasewa);
+        masasewa.setBounds(150, 100, 310, 30);
+
+        siteid_actual1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel16.add(siteid_actual1);
+        siteid_actual1.setBounds(620, 20, 320, 30);
+
+        nilaisewapph.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel16.add(nilaisewapph);
+        nilaisewapph.setBounds(620, 100, 320, 30);
+
+        kepemilikan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Private : Tanah Adat", "Private : Sertifikat", "Private : Girik", "Private : Letterc", "Private : Petok D", "Fasilitas Umum : Pemerintah Provinsi", "Fasilitas Umum : Pemerintah Kota", "Fasilitas Umum : Pemerintah Daerah", "Fasilitas Umum : Desa" }));
+        jPanel16.add(kepemilikan);
+        kepemilikan.setBounds(620, 60, 320, 30);
+
+        sitacClear.setText("Clear");
+        jPanel16.add(sitacClear);
+        sitacClear.setBounds(840, 140, 100, 30);
+
+        sitacSave.setText("Save");
+        jPanel16.add(sitacSave);
+        sitacSave.setBounds(620, 140, 100, 30);
+
+        sitacUpdate.setText("Edit");
+        jPanel16.add(sitacUpdate);
+        sitacUpdate.setBounds(730, 140, 100, 30);
+
+        jPanel8.add(jPanel16);
+        jPanel16.setBounds(10, 120, 950, 180);
+
+        sitacTabel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "PKS", "IMB", "Masa Sewa", "Luas Lahan", "Kepemilikan", "Nilai Sewa PPH"
+            }
+        ));
+        jScrollPane4.setViewportView(sitacTabel);
+
+        jPanel8.add(jScrollPane4);
+        jScrollPane4.setBounds(12, 370, 950, 300);
+
+        jPanel9.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel9.setLayout(null);
+
+        jButton4.setText("Save");
+        jPanel9.add(jButton4);
+        jButton4.setBounds(710, 140, 80, 30);
+
+        sitacRefresh.setText("Refresh");
+        jPanel9.add(sitacRefresh);
+        sitacRefresh.setBounds(10, 10, 110, 30);
+
+        sitacExcel.setText("Export Excel");
+        jPanel9.add(sitacExcel);
+        sitacExcel.setBounds(830, 10, 110, 30);
+
+        sitacDelete.setText("Delete");
+        jPanel9.add(sitacDelete);
+        sitacDelete.setBounds(130, 10, 110, 30);
+
+        jPanel8.add(jPanel9);
+        jPanel9.setBounds(10, 310, 950, 50);
+
+        jTabbedPane1.addTab("SITAC", jPanel8);
+
+        jPanel10.setLayout(null);
+
+        jPanel14.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel14.setLayout(null);
+
+        jLabel44.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Logo 2.png"))); // NOI18N
+        jPanel14.add(jLabel44);
+        jLabel44.setBounds(10, 0, 100, 100);
+
+        jLabel45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Mitratel 2.png"))); // NOI18N
+        jPanel14.add(jLabel45);
+        jLabel45.setBounds(120, 0, 240, 100);
+
+        txttanggal3.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jPanel14.add(txttanggal3);
+        txttanggal3.setBounds(730, 40, 190, 30);
+
+        jLabel46.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel46.setText("Date  :");
+        jPanel14.add(jLabel46);
+        jLabel46.setBounds(690, 40, 40, 30);
+
+        jLabel47.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel47.setText("User  :");
+        jPanel14.add(jLabel47);
+        jLabel47.setBounds(690, 10, 40, 30);
+
+        txtadmin3.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jPanel14.add(txtadmin3);
+        txtadmin3.setBounds(730, 10, 190, 30);
+
+        jLabel48.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jLabel48.setText("Time  :");
+        jPanel14.add(jLabel48);
+        jLabel48.setBounds(690, 70, 40, 30);
+
+        txtwaktu3.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        jPanel14.add(txtwaktu3);
+        txtwaktu3.setBounds(730, 70, 190, 30);
+
+        jPanel10.add(jPanel14);
+        jPanel14.setBounds(0, 0, 970, 110);
+
+        jPanel17.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel17.setLayout(null);
+
+        jLabel65.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel65.setText("Site Type");
+        jPanel17.add(jLabel65);
+        jLabel65.setBounds(20, 20, 110, 30);
+
+        jLabel66.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel66.setText("Type Tower");
+        jPanel17.add(jLabel66);
+        jLabel66.setBounds(20, 60, 110, 30);
+
+        jLabel67.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel67.setText("Tinggi Tower");
+        jPanel17.add(jLabel67);
+        jLabel67.setBounds(20, 100, 130, 30);
+
+        jLabel68.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel68.setText("Power");
+        jPanel17.add(jLabel68);
+        jLabel68.setBounds(500, 20, 140, 30);
+
+        jLabel69.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel69.setText("Photo GPS");
+        jPanel17.add(jLabel69);
+        jLabel69.setBounds(500, 100, 130, 30);
+
+        jLabel70.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel70.setText("Koordinat Site");
+        jPanel17.add(jLabel70);
+        jLabel70.setBounds(500, 180, 130, 30);
+
+        typetower.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel17.add(typetower);
+        typetower.setBounds(150, 60, 320, 30);
+
+        koordinatsite.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel17.add(koordinatsite);
+        koordinatsite.setBounds(630, 180, 310, 30);
+
+        power.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "PLN", "Genset", "Solar Cell" }));
+        jPanel17.add(power);
+        power.setBounds(630, 20, 310, 30);
+
+        cmeClear.setText("Clear");
+        jPanel17.add(cmeClear);
+        cmeClear.setBounds(840, 220, 90, 30);
+
+        sitetype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "GF", "RT", "Kamuflase", "" }));
+        jPanel17.add(sitetype);
+        sitetype.setBounds(150, 20, 320, 30);
+
+        rfidate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel17.add(rfidate);
+        rfidate.setBounds(150, 140, 320, 30);
+
+        jLabel71.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel71.setText("RFI Date");
+        jPanel17.add(jLabel71);
+        jLabel71.setBounds(20, 140, 110, 30);
+
+        jLabel72.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel72.setText("BAST-1-CME");
+        jPanel17.add(jLabel72);
+        jLabel72.setBounds(20, 180, 110, 30);
+
+        cmeSave.setText("Save");
+        jPanel17.add(cmeSave);
+        cmeSave.setBounds(630, 220, 100, 30);
+
+        cmeUpdate.setText("Edit");
+        jPanel17.add(cmeUpdate);
+        cmeUpdate.setBounds(740, 220, 90, 30);
+
+        jLabel73.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel73.setText("Power KVA");
+        jPanel17.add(jLabel73);
+        jLabel73.setBounds(500, 60, 130, 30);
+
+        power_kva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "5,5 KVA", "7,7 KVA", "10,6 KVA", "13,2 KVA", "16 KVA" }));
+        jPanel17.add(power_kva);
+        power_kva.setBounds(630, 60, 310, 30);
+
+        jLabel74.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        jLabel74.setText("Photo Namaplate");
+        jPanel17.add(jLabel74);
+        jLabel74.setBounds(500, 140, 130, 30);
+
+        tinggitowerr.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel17.add(tinggitowerr);
+        tinggitowerr.setBounds(150, 100, 320, 30);
+
+        jPanel10.add(jPanel17);
+        jPanel17.setBounds(10, 120, 950, 260);
+
+        jPanel11.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel11.setLayout(null);
+
+        cmeExcel.setText("Export Excel");
+        jPanel11.add(cmeExcel);
+        cmeExcel.setBounds(810, 10, 130, 30);
+
+        cmeRefresh.setText("Refresh");
+        jPanel11.add(cmeRefresh);
+        cmeRefresh.setBounds(10, 10, 130, 30);
+
+        cmeDelete.setText("Delete");
+        jPanel11.add(cmeDelete);
+        cmeDelete.setBounds(150, 10, 130, 30);
+
+        jPanel10.add(jPanel11);
+        jPanel11.setBounds(10, 390, 950, 50);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        jPanel10.add(jScrollPane2);
+        jScrollPane2.setBounds(10, 450, 950, 220);
+
+        jTabbedPane1.addTab("CME", jPanel10);
 
         getContentPane().add(jTabbedPane1);
         jTabbedPane1.setBounds(0, 0, 980, 710);
 
-        setBounds(0, 0, 990, 744);
+        setSize(new java.awt.Dimension(976, 744));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -578,22 +956,219 @@ public class Main extends javax.swing.JFrame {
         txtadmin.setText(user1);
         String user2 = Login.user;
         txtadmin1.setText(user2);
+        String user3 = Login.user;
+        txtadmin2.setText(user1);
+        String user5 = Login.user;
+        txtadmin3.setText(user1);
     }//GEN-LAST:event_formWindowOpened
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+    private void sitelistDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sitelistDeleteActionPerformed
         // TODO add your handling code here:
-            String SQL = "INSERT INTO tb_sitelist (projectid,siteid_po,sitename_po,siteid_actual,sitename_actual,cand,lat,longg,alamat,plantower,batch,area,mitra,timsitac,nohp,lahan,sow_order,sow_implements,tinggitower,milestone,progress,statuspln,targetrfi)"
-            + "VALUES('"+projectid.getText()+"','"+siteid_po.getText()+"','"+sitename_po.getText()+"','"+siteid_actual.getText()+"','"+sitename_actual.getText()+"','"+cand.getText()+"','"+lat.getText()+"','"+longg.getText()+"','"+alamat.getText()+"','"+plantower.getText()+"','"+batch.getText()+"','"+area.getText()+"','"+mitra.getText()+"','"+timsitac.getText()+"','"+nohp.getText()+"','"+lahan.getText()+"','"+sow_order.getSelectedItem()+"','"+sow_implements.getSelectedItem()+"','"+tinggitower.getText()+"','"+milestone.getSelectedItem()+"','"+progress.getSelectedItem()+"','"+statuspln.getText()+"','"+targetrfi.getText()+"')";
+        int baris = sitelistTabel.getSelectedRow();
+        if (baris != -1){
+            String ID = sitelistTabel.getValueAt(baris, 0).toString();
+            String SQL = "DELETE FROM tb_sitelist WHERE projectid='"+ID+"'";
             int status = KoneksiDB.execute(SQL);
-            
-            if (status == 1){
-                JOptionPane.showMessageDialog(this, "Data berhasil dimasukkan", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+            if (status==1){
+                JOptionPane.showMessageDialog(this, "Data berhasil dihapus! \nKlik tombol Refresh untuk mengupdate Database", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
             }else{
-                JOptionPane.showMessageDialog(this, "Data gagal dimasukkan", "Coba Lagi", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Data gagal dihapus!", "Coba Lagi", JOptionPane.WARNING_MESSAGE);
             }
-    }//GEN-LAST:event_btnSaveActionPerformed
+        }else{
+            JOptionPane.showMessageDialog(this, "Pilih Baris Data Dahulu", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_sitelistDeleteActionPerformed
 
-    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+    private void sitelistRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sitelistRefreshActionPerformed
+        // TODO add your handling code here:
+        selectData();
+    }//GEN-LAST:event_sitelistRefreshActionPerformed
+
+    private void sitelistTabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sitelistTabelMouseClicked
+        // TODO add your handling code here:
+        int baris = sitelistTabel.getSelectedRow();
+        if (baris != -1){
+            projectid.setText(sitelistTabel.getValueAt(baris, 0).toString());
+            siteid_po.setText(sitelistTabel.getValueAt(baris, 1).toString());
+            sitename_po.setText(sitelistTabel.getValueAt(baris, 2).toString());
+            siteid_actual.setText(sitelistTabel.getValueAt(baris, 3).toString());
+            sitename_actual.setText(sitelistTabel.getValueAt(baris, 4).toString());
+            cand.setText(sitelistTabel.getValueAt(baris, 5).toString());
+            lat.setText(sitelistTabel.getValueAt(baris, 6).toString());
+            longg.setText(sitelistTabel.getValueAt(baris, 7).toString());
+            alamat.setText(sitelistTabel.getValueAt(baris, 8).toString());
+            plantower.setText(sitelistTabel.getValueAt(baris, 9).toString());
+            batch.setText(sitelistTabel.getValueAt(baris, 10).toString());
+            area.setText(sitelistTabel.getValueAt(baris, 11).toString());
+            mitra.setText(sitelistTabel.getValueAt(baris, 12).toString());
+            timsitac.setText(sitelistTabel.getValueAt(baris, 13).toString());
+            nohp.setText(sitelistTabel.getValueAt(baris, 14).toString());
+            lahan.setText(sitelistTabel.getValueAt(baris, 15).toString());
+            String soworder = sitelistTabel.getValueAt(baris, 16).toString();
+                if(soworder.equals("-")){
+                    sow_order.setSelectedItem("-");
+                }
+                else if(soworder.equals("B2S")){
+                    sow_order.setSelectedItem("B2S");
+                }
+                else if(soworder.equals("Core")){
+                    sow_order.setSelectedItem("Core");
+                }
+                else if(soworder.equals("MCP")){
+                    sow_order.setSelectedItem("MCP");
+                }
+                else if(soworder.equals("Mini Macro")){
+                    sow_order.setSelectedItem("Mini Macro");
+                }
+            String sowimplements = sitelistTabel.getValueAt(baris, 17).toString();
+                if(sowimplements.equals("-")){
+                    sow_implements.setSelectedItem("-");
+                }
+                else if(sowimplements.equals("B2S")){
+                    sow_implements.setSelectedItem("B2S");
+                }
+                else if(sowimplements.equals("Collo")){
+                    sow_implements.setSelectedItem("Collo");
+                }
+                else if(sowimplements.equals("Combat")){
+                    sow_implements.setSelectedItem("Combat");
+                }
+                else if(sowimplements.equals("MCP")){
+                    sow_implements.setSelectedItem("MCP");
+                }
+                else if(sowimplements.equals("Mini Macro")){
+                    sow_implements.setSelectedItem("Mini Macro");
+                }
+                else if(sowimplements.equals("TDF")){
+                    sow_implements.setSelectedItem("TDF");
+                }
+           tinggitower.setText(sitelistTabel.getValueAt(baris, 18).toString());
+           String miles = sitelistTabel.getValueAt(baris, 19).toString();
+                if(miles.equals("-")){
+                    milestone.setSelectedItem("-");
+                }
+                else if(miles.equals("01. DROP")){
+                    milestone.setSelectedItem("01. DROP");
+                }
+                else if(miles.equals("02. CHANG SOW")){
+                    milestone.setSelectedItem("02. CHANG SOW");
+                }
+                else if(miles.equals("03. SIS")){
+                    milestone.setSelectedItem("03. SIS");
+                }
+                else if(miles.equals("04. SITAC 1")){
+                    milestone.setSelectedItem("004. SITAC 1");
+                }
+                else if(miles.equals("05. SITAC 2")){
+                    milestone.setSelectedItem("05. SITAC 2");
+                }
+                else if(miles.equals("06. RFC")){
+                    milestone.setSelectedItem("06. RFC");
+                }
+                else if(miles.equals("07. CME")){
+                    milestone.setSelectedItem("07. CME");
+                }
+                else if(miles.equals("08. RFI")){
+                    milestone.setSelectedItem("08. RFI");
+                }
+                else if(miles.equals("09. RFI by COMBAT")){
+                    milestone.setSelectedItem("09. RFI by COMBAT");
+                }
+                else if(miles.equals("10. Wait IP")){
+                    milestone.setSelectedItem("10. Wait IP");
+                }
+            String prog = sitelistTabel.getValueAt(baris, 20).toString();
+                if(prog.equals("-")){
+                    progress.setSelectedItem("-");
+                }
+                else if(prog.equals("01. Proposed ReNom")){
+                    progress.setSelectedItem("01. Proposed ReNom");
+                }
+                else if(prog.equals("02. Survey")){
+                    progress.setSelectedItem("02. Survey");
+                }
+                else if(prog.equals("03. Re-Survey")){
+                    progress.setSelectedItem("03. Re-Survey");
+                }
+                else if(prog.equals("04. Rehunting")){
+                    progress.setSelectedItem("04. Rehunting");
+                }
+                else if(prog.equals("05. Validasi Cand")){
+                    progress.setSelectedItem("05. Validasi Cand");
+                }
+                else if(prog.equals("06. Nego Harga")){
+                    progress.setSelectedItem("06. Nego Harga");
+                }
+                else if(prog.equals("07. IW")){
+                    progress.setSelectedItem("07. IW");
+                }
+                else if(prog.equals("08. Rekom LURCAM")){
+                    progress.setSelectedItem("08. Rekom LURCAM");
+                }
+                else if(prog.equals("09. Perijinan")){
+                    progress.setSelectedItem("09. Perijinan");
+                }
+                else if(prog.equals("10. Soil Test/Hammer Test")){
+                    progress.setSelectedItem("10. Soil Test/Hammer Test");
+                }
+                else if(prog.equals("11. Design")){
+                    progress.setSelectedItem("11. Design");
+                }
+                else if(prog.equals("12. RFC")){
+                    progress.setSelectedItem("12. RFC");
+                }
+                else if(prog.equals("13. Site Opening")){
+                    progress.setSelectedItem("13. Site Opening");
+                }
+                else if(prog.equals("14. Galian")){
+                    progress.setSelectedItem("14. Galian");
+                }
+                else if(prog.equals("15. Borepile")){
+                    progress.setSelectedItem("15. Borepile");
+                }
+                else if(prog.equals("16. Pembesian")){
+                    progress.setSelectedItem("16. Pembesian");
+                }
+                else if(prog.equals("17. Cor & Curing")){
+                    progress.setSelectedItem("17. Cor & Curing");
+                }
+                else if(prog.equals("18. Install Pondasi")){
+                    progress.setSelectedItem("18. Install Pondasi");
+                }
+                else if(prog.equals("19. Tower/Pole Erection")){
+                    progress.setSelectedItem("19. Tower/Pole Erection");
+                }
+                else if(prog.equals("20. BF, Tray, Me & DAS")){
+                    progress.setSelectedItem("20. BF, Tray, Me & DAS");
+                }
+                else if(prog.equals("21. CME Done Wait Power")){
+                    progress.setSelectedItem("21. CME Done Wait Power");
+                }
+                else if(prog.equals("22. RFI")){
+                    progress.setSelectedItem("22. RFI");
+                }
+                else if(prog.equals("23. Wait IP OLO")){
+                    progress.setSelectedItem("23. Wait IP OLO");
+                }
+            statuspln.setText(sitelistTabel.getValueAt(baris, 21).toString());
+            targetrfi.setText(sitelistTabel.getValueAt(baris, 22).toString());
+        }
+    }//GEN-LAST:event_sitelistTabelMouseClicked
+
+    private void sitelistSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sitelistSaveActionPerformed
+        // TODO add your handling code here:
+        String SQL = "INSERT INTO tb_sitelist (projectid,siteid_po,sitename_po,siteid_actual,sitename_actual,cand,lat,longg,alamat,plantower,batch,area,mitra,timsitac,nohp,lahan,sow_order,sow_implements,tinggitower,milestone,progress,statuspln,targetrfi)"
+        + "VALUES('"+projectid.getText()+"','"+siteid_po.getText()+"','"+sitename_po.getText()+"','"+siteid_actual.getText()+"','"+sitename_actual.getText()+"','"+cand.getText()+"','"+lat.getText()+"','"+longg.getText()+"','"+alamat.getText()+"','"+plantower.getText()+"','"+batch.getText()+"','"+area.getText()+"','"+mitra.getText()+"','"+timsitac.getText()+"','"+nohp.getText()+"','"+lahan.getText()+"','"+sow_order.getSelectedItem()+"','"+sow_implements.getSelectedItem()+"','"+tinggitower.getText()+"','"+milestone.getSelectedItem()+"','"+progress.getSelectedItem()+"','"+statuspln.getText()+"','"+targetrfi.getText()+"')";
+        int status = KoneksiDB.execute(SQL);
+
+        if (status == 1){
+            JOptionPane.showMessageDialog(this, "Data berhasil dimasukkan", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "Data gagal dimasukkan", "Coba Lagi", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_sitelistSaveActionPerformed
+
+    private void sitelistClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sitelistClearActionPerformed
         // TODO add your handling code here:
         projectid.setText("");
         siteid_po.setText("");
@@ -618,34 +1193,120 @@ public class Main extends javax.swing.JFrame {
         progress.setSelectedItem("-");
         statuspln.setText("");
         targetrfi.setText("");
-    }//GEN-LAST:event_btnClearActionPerformed
+    }//GEN-LAST:event_sitelistClearActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+    private void sitelistExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sitelistExcelActionPerformed
         // TODO add your handling code here:
-        int baris = tabel.getSelectedRow();
-        if (baris != -1){
-            String ID = tabel.getValueAt(baris, 0).toString();
-            String SQL = "DELETE FROM tb_sitelist WHERE projectid='"+ID+"'";
-            int status = KoneksiDB.execute(SQL);
-            if (status==1){
-                JOptionPane.showMessageDialog(this, "Data berhasil dihapus! \nKlik tombol Refresh untuk mengupdate Database", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
-            }else{
-                JOptionPane.showMessageDialog(this, "Data gagal dihapus!", "Coba Lagi", JOptionPane.WARNING_MESSAGE);
+         try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/db_mitratel","root","");
+            Statement statement = con.createStatement();
+
+            FileOutputStream fileOut;
+            // Hasil Export
+            fileOut = new FileOutputStream("D:/export.xls");
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet worksheet = workbook.createSheet("Sheet 0");
+
+     // Nama Fieldd
+            Row row1 = worksheet.createRow((short)0);
+            row1.createCell(0).setCellValue("Project ID");
+            row1.createCell(1).setCellValue("Site ID PO");
+            row1.createCell(2).setCellValue("Site Name PO");
+            row1.createCell(3).setCellValue("Site ID Actual");
+            row1.createCell(4).setCellValue("Site Name Actual");
+            row1.createCell(5).setCellValue("Cand");
+            row1.createCell(6).setCellValue("Lat");
+            row1.createCell(7).setCellValue("Long");
+            row1.createCell(8).setCellValue("Alamat");
+            row1.createCell(9).setCellValue("Plan Tower");
+            row1.createCell(10).setCellValue("Batch");
+            row1.createCell(11).setCellValue("Area");
+            row1.createCell(12).setCellValue("Mitra");
+            row1.createCell(13).setCellValue("Tim SITAC");
+            row1.createCell(14).setCellValue("No HP");
+            row1.createCell(15).setCellValue("Lahan");
+            row1.createCell(16).setCellValue("SOW Order");
+            row1.createCell(17).setCellValue("SOW Implements");
+            row1.createCell(18).setCellValue("Tinggi Tower");
+            row1.createCell(19).setCellValue("Milestone");
+            row1.createCell(20).setCellValue("Progress");
+            row1.createCell(21).setCellValue("Status PLN");
+            row1.createCell(22).setCellValue("Target RFI");
+            
+            Row row2 ;
+            ResultSet rs = statement.executeQuery("SELECT * FROM tb_sitelist");
+            while(rs.next()){
+                int a = rs.getRow();
+                row2 = worksheet.createRow((short)a);
+                // Sesuaikan dengan Jumlah Field
+                row2.createCell(0).setCellValue(rs.getString(1));
+                row2.createCell(1).setCellValue(rs.getString(2));
+                row2.createCell(2).setCellValue(rs.getString(3));
+                row2.createCell(3).setCellValue(rs.getString(4));
+                row2.createCell(4).setCellValue(rs.getString(5));
+                row2.createCell(5).setCellValue(rs.getString(6));
+                row2.createCell(6).setCellValue(rs.getString(7));
+                row2.createCell(7).setCellValue(rs.getString(8));
+                row2.createCell(8).setCellValue(rs.getString(9));
+                row2.createCell(9).setCellValue(rs.getString(10));
+                row2.createCell(10).setCellValue(rs.getString(11));
+                row2.createCell(11).setCellValue(rs.getString(12));
+                row2.createCell(12).setCellValue(rs.getString(13));
+                row2.createCell(13).setCellValue(rs.getString(14));
+                row2.createCell(14).setCellValue(rs.getString(15));
+                row2.createCell(15).setCellValue(rs.getString(16));
+                row2.createCell(16).setCellValue(rs.getString(17));
+                row2.createCell(17).setCellValue(rs.getString(18));
+                row2.createCell(18).setCellValue(rs.getString(19));
+                row2.createCell(19).setCellValue(rs.getString(20));
+                row2.createCell(20).setCellValue(rs.getString(21));
+                row2.createCell(21).setCellValue(rs.getString(22));
+                row2.createCell(22).setCellValue(rs.getString(23));
             }
-        }else{
-            JOptionPane.showMessageDialog(this, "Pilih Baris Data Dahulu", "Error", JOptionPane.INFORMATION_MESSAGE);
+            workbook.write(fileOut);
+            fileOut.flush();
+            fileOut.close();
+            rs.close();
+            statement.close();
+            con.close();
+            JOptionPane.showMessageDialog(this, "Export Berhasil!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }catch(IOException ioe){
+            System.out.println(ioe);
         }
-    }//GEN-LAST:event_btnDeleteActionPerformed
+    }//GEN-LAST:event_sitelistExcelActionPerformed
 
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+    private void sitelistUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sitelistUpdateActionPerformed
         // TODO add your handling code here:
-        selectData();
-    }//GEN-LAST:event_btnRefreshActionPerformed
-
-    private void tabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_tabelMouseClicked
+        String SQL = "UPDATE tb_sitelist SET"
+        + "siteid_po='"+siteid_po.getText()+"',"
+        + "sitename_po='"+sitename_po.getText()+"',"
+        + "siteid_actual='"+siteid_actual.getText()+"',"
+        + "sitename_actual='"+sitename_actual.getText()+"',"
+        + "cand='"+cand.getText()+"',"
+        + "lat='"+lat.getText()+"',"
+        + "longg='"+longg.getText()+"',"
+        + "alamat='"+alamat.getText()+"',"
+        + "plantower='"+plantower.getText()+"',"
+        + "batch='"+batch.getText()+"',"
+        + "area='"+area.getText()+"',"
+        + "mitra='"+mitra.getText()+"',"
+        + "timsitac='"+timsitac.getText()+"',"
+        + "nohp='"+nohp.getText()+"',"
+        + "lahan='"+lahan.getText()+"',"
+        + "sow_order='"+sow_order.getSelectedItem()+"',"
+        + "sow_implements='"+sow_implements.getSelectedItem()+"',"
+        + "tinggitower='"+tinggitower.getText()+"',"
+        + "milestone='"+milestone.getSelectedItem()+"',"
+        + "progress='"+progress.getSelectedItem()+"',"
+        + "statuspln='"+statuspln.getText()+"',"
+        + "targetrfi='"+targetrfi.getText()+"',"
+        + "' WHERE projectid='"+projectid.getText()+"'";
+    }//GEN-LAST:event_sitelistUpdateActionPerformed
 
     private void setTanggal(){
         java.util.Date now = new java.util.Date();
@@ -659,6 +1320,18 @@ public class Main extends javax.swing.JFrame {
         txttanggal1.setText(kal.format(now));
     }
     
+    private void setTanggal2(){
+        java.util.Date now = new java.util.Date();
+        java.text.SimpleDateFormat kal = new java.text.SimpleDateFormat("dd MMMM yyyy");
+        txttanggal2.setText(kal.format(now));
+    }
+     
+    private void setTanggal4(){
+        java.util.Date now = new java.util.Date();
+        java.text.SimpleDateFormat kal = new java.text.SimpleDateFormat("dd MMMM yyyy");
+        txttanggal3.setText(kal.format(now));
+    }
+     
     public final void setJam(){
         ActionListener taskPerformer = new ActionListener() {
             @Override
@@ -701,6 +1374,48 @@ public class Main extends javax.swing.JFrame {
         new Timer(1000, taskPerformer).start();
     }
     
+    public final void setJam2(){
+        ActionListener taskPerformer = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                String nol_jam = "", nol_menit = "",nol_detik = "";
+                java.util.Date dateTime = new java.util.Date();
+                int nilai_jam = dateTime.getHours();
+                int nilai_menit = dateTime.getMinutes();
+                int nilai_detik = dateTime.getSeconds();
+                if(nilai_jam <= 9) nol_jam= "0";
+                if(nilai_menit <= 9) nol_menit= "0";
+                if(nilai_detik <= 9) nol_detik= "0";
+                String jam = nol_jam + Integer.toString(nilai_jam);
+                String menit = nol_menit + Integer.toString(nilai_menit);
+                String detik = nol_detik + Integer.toString(nilai_detik);
+                txtwaktu2.setText(jam+":"+menit+":"+detik+"");
+            }
+        };
+        new Timer(1000, taskPerformer).start();
+    }
+    
+    public final void setJam4(){
+        ActionListener taskPerformer = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                String nol_jam = "", nol_menit = "",nol_detik = "";
+                java.util.Date dateTime = new java.util.Date();
+                int nilai_jam = dateTime.getHours();
+                int nilai_menit = dateTime.getMinutes();
+                int nilai_detik = dateTime.getSeconds();
+                if(nilai_jam <= 9) nol_jam= "0";
+                if(nilai_menit <= 9) nol_menit= "0";
+                if(nilai_detik <= 9) nol_detik= "0";
+                String jam = nol_jam + Integer.toString(nilai_jam);
+                String menit = nol_menit + Integer.toString(nilai_menit);
+                String detik = nol_detik + Integer.toString(nilai_detik);
+                txtwaktu3.setText(jam+":"+menit+":"+detik+"");
+            }
+        };
+        new Timer(1000, taskPerformer).start();
+    }
+    
     private void selectData() {
         String kolom[] = {"Project ID","Site ID PO","Site Name PO","Site ID Actual","Site Name Actual","Cand","Lat","Long","Alamat","Plan Tower","Batch","Area","Mitra","Tim Sitac","No HP","Lahan","SoW Order","SoW Implements","Tinggi Tower","Milestone","Progress","Status PLN","Target RFI"};
         DefaultTableModel dtm = new DefaultTableModel(null, kolom); 
@@ -737,7 +1452,114 @@ public class Main extends javax.swing.JFrame {
         }catch (SQLException ex){
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tabel.setModel(dtm);
+        sitelistTabel.setModel(dtm);
+        sitelistTabel.setAutoResizeMode(sitelistTabel.AUTO_RESIZE_OFF);
+        TableColumn col = sitelistTabel.getColumnModel().getColumn(0);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(1);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(2);
+        col.setPreferredWidth(150);
+        col=sitelistTabel.getColumnModel().getColumn(3);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(4);
+        col.setPreferredWidth(150); 
+        col=sitelistTabel.getColumnModel().getColumn(5);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(6);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(7);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(8);
+        col.setPreferredWidth(500);
+        col=sitelistTabel.getColumnModel().getColumn(9);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(10);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(11);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(12);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(13);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(14);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(15);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(16);
+        col.setPreferredWidth(100); 
+        col=sitelistTabel.getColumnModel().getColumn(17);
+        col.setPreferredWidth(120);
+        col=sitelistTabel.getColumnModel().getColumn(18);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(19);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(20);
+        col.setPreferredWidth(150);
+        col=sitelistTabel.getColumnModel().getColumn(21);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(22);
+        col.setPreferredWidth(100);
+    }
+    
+    private void setTable(){
+        sitelistTabel.setAutoResizeMode(sitelistTabel.AUTO_RESIZE_OFF);
+        TableColumn col = sitelistTabel.getColumnModel().getColumn(0);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(1);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(2);
+        col.setPreferredWidth(150);
+        col=sitelistTabel.getColumnModel().getColumn(3);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(4);
+        col.setPreferredWidth(150); 
+        col=sitelistTabel.getColumnModel().getColumn(5);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(6);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(7);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(8);
+        col.setPreferredWidth(500);
+        col=sitelistTabel.getColumnModel().getColumn(9);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(10);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(11);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(12);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(13);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(14);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(15);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(16);
+        col.setPreferredWidth(100); 
+        col=sitelistTabel.getColumnModel().getColumn(17);
+        col.setPreferredWidth(120);
+        col=sitelistTabel.getColumnModel().getColumn(18);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(19);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(20);
+        col.setPreferredWidth(150);
+        col=sitelistTabel.getColumnModel().getColumn(21);
+        col.setPreferredWidth(100);
+        col=sitelistTabel.getColumnModel().getColumn(22);
+        col.setPreferredWidth(100);
+    }
+    
+    private void disableMaximize(){
+        setExtendedState(Main.MAXIMIZED_HORIZ);
+        setVisible(true);
+        setResizable(false);
+    }
+    
+    private void setIcon(){
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Icon.jpg")));
     }
     
     /**
@@ -779,12 +1601,14 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextArea alamat;
     private javax.swing.JTextField area;
     private javax.swing.JTextField batch;
-    private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnRefresh;
-    private javax.swing.JButton btnSave;
     private javax.swing.JTextField cand;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton cmeClear;
+    private javax.swing.JButton cmeDelete;
+    private javax.swing.JButton cmeExcel;
+    private javax.swing.JButton cmeRefresh;
+    private javax.swing.JButton cmeSave;
+    private javax.swing.JButton cmeUpdate;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -799,6 +1623,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
@@ -813,46 +1642,108 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel65;
+    private javax.swing.JLabel jLabel66;
+    private javax.swing.JLabel jLabel67;
+    private javax.swing.JLabel jLabel68;
+    private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel70;
+    private javax.swing.JLabel jLabel71;
+    private javax.swing.JLabel jLabel72;
+    private javax.swing.JLabel jLabel73;
+    private javax.swing.JLabel jLabel74;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JComboBox<String> kepemilikan;
+    private javax.swing.JTextField koordinatsite;
     private javax.swing.JTextField lahan;
     private javax.swing.JTextField lat;
     private javax.swing.JTextField longg;
+    private javax.swing.JTextField masasewa;
     private javax.swing.JComboBox<String> milestone;
     private javax.swing.JTextField mitra;
+    private javax.swing.JTextField nilaisewapph;
     private javax.swing.JTextField nohp;
     private javax.swing.JTextField plantower;
+    private javax.swing.JComboBox<String> power;
+    private javax.swing.JComboBox<String> power_kva;
     private javax.swing.JComboBox<String> progress;
     private javax.swing.JTextField projectid;
+    private javax.swing.JTextField rfidate;
+    private javax.swing.JButton sitacClear;
+    private javax.swing.JButton sitacDelete;
+    private javax.swing.JButton sitacExcel;
+    private javax.swing.JButton sitacRefresh;
+    private javax.swing.JButton sitacSave;
+    private javax.swing.JTable sitacTabel;
+    private javax.swing.JButton sitacUpdate;
     private javax.swing.JTextField siteid_actual;
+    private javax.swing.JTextField siteid_actual1;
     private javax.swing.JTextField siteid_po;
+    private javax.swing.JButton sitelistClear;
+    private javax.swing.JButton sitelistDelete;
+    private javax.swing.JButton sitelistExcel;
+    private javax.swing.JButton sitelistRefresh;
+    private javax.swing.JButton sitelistSave;
+    private javax.swing.JTable sitelistTabel;
+    private javax.swing.JButton sitelistUpdate;
     private javax.swing.JTextField sitename_actual;
     private javax.swing.JTextField sitename_po;
+    private javax.swing.JComboBox<String> sitetype;
     private javax.swing.JComboBox<String> sow_implements;
     private javax.swing.JComboBox<String> sow_order;
     private javax.swing.JTextField statuspln;
-    private javax.swing.JTable tabel;
     private javax.swing.JTextField targetrfi;
     private javax.swing.JTextField timsitac;
     private javax.swing.JTextField tinggitower;
+    private javax.swing.JTextField tinggitowerr;
     private javax.swing.JLabel txtadmin;
     private javax.swing.JLabel txtadmin1;
+    private javax.swing.JLabel txtadmin2;
+    private javax.swing.JLabel txtadmin3;
     private javax.swing.JLabel txttanggal;
     private javax.swing.JLabel txttanggal1;
+    private javax.swing.JLabel txttanggal2;
+    private javax.swing.JLabel txttanggal3;
     private javax.swing.JLabel txtwaktu;
     private javax.swing.JLabel txtwaktu1;
+    private javax.swing.JLabel txtwaktu2;
+    private javax.swing.JLabel txtwaktu3;
+    private javax.swing.JTextField typetower;
     // End of variables declaration//GEN-END:variables
 }

@@ -25,6 +25,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        disableMaximize();
     }
 
     /**
@@ -96,9 +97,10 @@ public class Login extends javax.swing.JFrame {
         btnSignUp.setBounds(370, 180, 110, 30);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 540, 300);
+        jPanel1.setBounds(0, 0, 500, 270);
 
-        setBounds(0, 0, 512, 303);
+        setSize(new java.awt.Dimension(512, 303));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
@@ -141,6 +143,12 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void disableMaximize(){
+        setExtendedState(Main.MAXIMIZED_HORIZ);
+        setVisible(true);
+        setResizable(false);
+    }
+    
     /**
      * @param args the command line arguments
      */
