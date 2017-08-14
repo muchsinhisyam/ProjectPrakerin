@@ -44,8 +44,8 @@ public class Login extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtnama = new javax.swing.JTextField();
         txtpass = new javax.swing.JPasswordField();
-        btnLogin = new javax.swing.JButton();
         btnSignUp = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -76,17 +76,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(txtpass);
         txtpass.setBounds(110, 220, 250, 30);
 
-        btnLogin.setFont(new java.awt.Font("Futura Bk BT", 1, 12)); // NOI18N
-        btnLogin.setText("Login");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnLogin);
-        btnLogin.setBounds(370, 220, 110, 30);
-
-        btnSignUp.setFont(new java.awt.Font("Futura Bk BT", 1, 12)); // NOI18N
         btnSignUp.setText("Sign Up");
         btnSignUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,6 +84,15 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel1.add(btnSignUp);
         btnSignUp.setBounds(370, 180, 110, 30);
+
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLogin);
+        btnLogin.setBounds(370, 220, 110, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 500, 270);
@@ -137,8 +135,8 @@ public class Login extends javax.swing.JFrame {
                 txtpass.setText("");
                 txtnama.requestFocus();
             }
-        }   
-            catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "GAGAL");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
