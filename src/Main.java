@@ -1170,7 +1170,7 @@ public class Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Data gagal dihapus!", "Coba Lagi", JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(this, "Pilih Baris Data Dahulu", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Pilih baris pada tabel terlebih dahulu!", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_sitelistDeleteActionPerformed
 
@@ -1357,10 +1357,10 @@ public class Main extends javax.swing.JFrame {
         int status = KoneksiDB.execute(SQL);
 
         if (status == 1){
-            JOptionPane.showMessageDialog(this, "Data berhasil dimasukkan", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Data berhasil dimasukkan!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
             selectData();
         }else{
-            JOptionPane.showMessageDialog(this, "Data gagal dimasukkan", "Coba Lagi", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Data gagal dimasukkan!", "Coba Lagi", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_sitelistSaveActionPerformed
 
@@ -1466,7 +1466,7 @@ public class Main extends javax.swing.JFrame {
             rs.close();
             statement.close();
             con.close();
-            JOptionPane.showMessageDialog(this, "Export Berhasil!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Export data Berhasil!\nData diletakkan di 'D:/export.xls'", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
         }catch(ClassNotFoundException e){
             System.out.println(e);
         }catch(SQLException ex){
@@ -1478,30 +1478,19 @@ public class Main extends javax.swing.JFrame {
 
     private void sitelistUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sitelistUpdateActionPerformed
         // TODO add your handling code here:
-        String SQL = "UPDATE tb_sitelist SET"
-        + "siteid_po='"+siteid_po.getText()+"',"
-        + "sitename_po='"+sitename_po.getText()+"',"
-        + "siteid_actual='"+siteid_actual.getText()+"',"
-        + "sitename_actual='"+sitename_actual.getText()+"',"
-        + "cand='"+cand.getText()+"',"
-        + "lat='"+lat.getText()+"',"
-        + "longg='"+longg.getText()+"',"
-        + "alamat='"+alamat.getText()+"',"
-        + "plantower='"+plantower.getText()+"',"
-        + "batch='"+batch.getText()+"',"
-        + "area='"+area.getText()+"',"
-        + "mitra='"+mitra.getText()+"',"
-        + "timsitac='"+timsitac.getText()+"',"
-        + "nohp='"+nohp.getText()+"',"
-        + "lahan='"+lahan.getText()+"',"
-        + "sow_order='"+sow_order.getSelectedItem()+"',"
-        + "sow_implements='"+sow_implements.getSelectedItem()+"',"
-        + "tinggitower='"+tinggitower.getText()+"',"
-        + "milestone='"+milestone.getSelectedItem()+"',"
-        + "progress='"+progress.getSelectedItem()+"',"
-        + "statuspln='"+statuspln.getText()+"',"
-        + "targetrfi='"+targetrfi.getText()+"',"
-        + "' WHERE projectid='"+projectid.getText()+"'";
+        if("".equals(projectid.getText()) || "".equals(siteid_po.getText()) || "".equals(sitename_po.getText()) || "".equals(siteid_actual.getText()) || "".equals(sitename_actual.getText()) || "".equals(cand.getText()) || "".equals(lat.getText()) || "".equals(longg.getText()) || "".equals(alamat.getText()) || "".equals(plantower.getText()) || "".equals(batch.getText()) || "".equals(area.getText()) || "".equals(mitra.getText()) || "".equals(timsitac.getText()) || "".equals(nohp.getText()) || "".equals(lahan.getText()) || "".equals(sow_order.getSelectedItem()) || "".equals(sow_implements.getSelectedItem()) || "".equals(tinggitower.getText()) || "".equals(milestone.getSelectedItem()) || "".equals(progress.getSelectedItem()) || "".equals(statuspln.getText()) || "".equals(targetrfi.getText()) ){
+            JOptionPane.showMessageDialog(this, "Harap lengkapi Data","Error", JOptionPane.WARNING_MESSAGE);
+
+        }else{
+            String SQL = "UPDATE tb_sitelist SET projectid='"+projectid.getText()+"',siteid_po='"+siteid_po.getText()+"',sitename_po='"+sitename_po.getText()+"',siteid_actual='"+siteid_actual.getText()+"',sitename_actual='"+sitename_actual.getText()+"',cand='"+cand.getText()+"',lat='"+lat.getText()+"',longg='"+longg.getText()+"',alamat='"+alamat.getText()+"',plantower='"+plantower.getText()+"',batch='"+batch.getText()+"',area='"+area.getText()+"',mitra='"+mitra.getText()+"',timsitac='"+timsitac.getText()+"',nohp='"+nohp.getText()+"',lahan='"+lahan.getText()+"',sow_order='"+sow_order.getSelectedItem()+"',sow_implements='"+sow_implements.getSelectedItem()+"',tinggitower='"+tinggitower.getText()+"',milestone='"+milestone.getSelectedItem()+"',progress='"+progress.getSelectedItem()+"',statuspln='"+statuspln.getText()+"',targetrfi='"+targetrfi.getText()+"' WHERE projectid='"+projectid.getText()+"' " ;
+            int status = KoneksiDB.execute(SQL) ;
+            if(status == 1){
+                JOptionPane.showMessageDialog(this, "Data berhasil diupdate!","Berhasil",JOptionPane.INFORMATION_MESSAGE);
+                selectData();
+            }else{
+                JOptionPane.showMessageDialog(this, "Data gagal diupdate!","Coba Lagi",JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_sitelistUpdateActionPerformed
 
     private void btnPKSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPKSActionPerformed
