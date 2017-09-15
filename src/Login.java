@@ -97,7 +97,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 500, 270);
 
-        setSize(new java.awt.Dimension(512, 303));
+        setSize(new java.awt.Dimension(502, 297));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -106,6 +106,17 @@ public class Login extends javax.swing.JFrame {
         String username = txtnama.getText();
         String password = txtpass.getText();
 
+        if(txtnama.getText().equals("") && txtpass.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Username dan Password Kosong!\n, Coba Lagi ya!");
+        }
+        else if(txtnama.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Username Kosong! ,\n, Coba Lagi ya!");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Password Kosong! ,\n, Coba Lagi ya!");
+        }
+        
         try {
             try (Statement statement = (Statement) file_koneksi.GetConnection().createStatement()){
                 statement.executeUpdate("INSERT INTO `tb_akun`(`username`, `password`) VALUES ('"+username+"','"+password+"');");
